@@ -35,8 +35,19 @@ class Config(object):
             else:
                 self.config_object[arg] = kwargs.get(arg, '')
 
-    def load(self, path):
-        pass
+    def load(self, path: str) -> None:
+        """
+        Loads new configuration values from a file.
+
+        Args:
+            path (str): Path to the save file.
+        """
+        try:
+            with open(path, 'r') as read_file:
+                configuration = json.load(read_file)
+                self.config_object = DotMap(configuration)
+        except FileNotFoundError:
+            print(f"The system cannot find the specified config file at {os.path.abspath(path)}")
 
     def save(self, path: str) -> None:
         """
