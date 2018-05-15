@@ -2,6 +2,7 @@ import os
 import json
 from dotmap import DotMap
 
+
 class Config(object):
     """
     Handles everything related to configuration.
@@ -11,12 +12,20 @@ class Config(object):
     config_object = DotMap()
 
     def __init__(self, **kwargs):
-       pass
-
+        pass
 
     def load(self, path):
         pass
 
+    def save(self, path: str) -> None:
+        """
+        Saves the current configuration to a file.
 
-    def save(self, path):
-        pass
+        Args:
+            path (str): Path to the save file.
+        """
+        try:
+            with open(path, 'w') as write_file:
+                json.dump(self.config_object, write_file, indent=True)
+        except FileNotFoundError:
+            print(f"The system cannot find the specified config file at {os.path.abspath(path)}")
