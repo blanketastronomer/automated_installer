@@ -35,6 +35,30 @@ class Config(object):
             else:
                 self.config_object[arg] = kwargs.get(arg, '')
 
+    def add_installer(self, name: str, **kwargs) -> None:
+        """
+        Add an installer to the list of installers to execute.
+
+        Args:
+            name (str): Name of the installer.  Used when displaying the info to
+                the user.
+            **installer_path (str): Path to the installer (usually a .exe or .pkg)
+            **arguments (str): Arguments supplied to the installer.
+            **instructions (str, list): Instructions to display to the user before the installer is run.
+                Use str for single-line and list for multi-line instructions.
+            **install_unless_exist (str): If this path exists, do not run the
+                installer.
+        """
+        installer = DotMap()
+        installer.name = name
+
+        attributes = ['installer_path', 'arguments', 'instructions', 'install_unless_exist']
+
+        for attr in attributes:
+            installer[attr] = kwargs.get(attr, '')
+
+        self.config_object.installers.append(installer)
+
     def load(self, path: str) -> None:
         """
         Loads new configuration values from a file.
