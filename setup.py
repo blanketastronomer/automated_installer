@@ -9,6 +9,8 @@ setup(
     author_email='blanketastronomer@users.noreply.github.com',
     license='MIT',
     packages=['automated_installer'],
-    install_requires=[],
+    install_requires=[
+        'dotmap'
+    ],
     python_requires=">=3.6.5"
 )
